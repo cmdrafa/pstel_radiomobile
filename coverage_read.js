@@ -3,13 +3,12 @@ const readline = require('readline');
 const stream = require('stream');
 
 const instream = fs.createReadStream('./1pixel_coverage.txt');
-const outstream = new stream;
-outstream.readable = true;
-outstream.writable = true;
+const resultpath = fs.openSync('./result.txt', 'w');
+resultpath.isTTY = true;
 
 const rl = readline.createInterface({
     input: instream,
-    output: outstream,
+    output: resultpath,
     terminal: false
 });
 
@@ -29,40 +28,42 @@ rl.on('line', (line) => {
     if (lineNumber > 6) {
         let fields = line.split(',');
         let temprxValue_1 = fields[2];
-        let temprxValue_2 = temprxValue_1.substring(5, temprxValue_1.length)
-        //console.log('TemprxValue_2', temprxValue_2);
-        let rxValue = Number(temprxValue_2);
-        //console.log(typeof(rxValue));
+        if (temprxValue_1) {
+            let temprxValue_2 = temprxValue_1.substring(5, temprxValue_1.length)
+            let rxValue = Number(temprxValue_2);
 
-      if (rxValue < 0) {
-            n0dB++;
+            if (rxValue < 0) {
+                n0dB++;
+            }
+            if (rxValue < 8) {
+                n8dB++;
+            }
+            if (rxValue < 14) {
+                n14dB++;
+            }
+            if (rxValue < 20) {
+                n20dB++;
+            }
+            if (rxValue < 28) {
+                n28dB++;
+            }
+            if (rxValue < 34) {
+                n34dB++;
+            }
+            if (rxValue < 40) {
+                n40dB++;
+            }
+            if (rxValue < 48) {
+                n48dB++;
+            }
+            //console.log('n48db', n48dB);
         }
-        if (rxValue < 8) {
-            n8dB++;
-        }
-        if (rxValue < 14) {
-            n14dB++;
-        }
-        if (rxValue < 20) {
-            n20dB++;
-        }
-        if (rxValue < 28) {
-            n28dB++;
-        }
-        if (rxValue < 34) {
-            n34dB++;
-        }
-        if (rxValue < 40) {
-            n40dB++;
-        }
-        if (rxValue < 48) {
-            n48dB++;
-        }
-
-        console.log('n48db',n48dB);
-
-        //console.log(lineNumber, rxValue);
     }
-
-
-})
+}).on('close', () => {
+    let result = `00db:${n0dB}\r\n08db:${n8dB}\r\n14db:${n14dB}\r\n20db:${n20dB}\r\n28db:${n28dB}\r\n34db:${n34dB}\r\n40db:${n40dB}\r\n48db:${n48dB}`;
+    fs.write(resultpath, result, () => {
+        fs.close(resultpath, () => {
+            console.log(`Result written to result.txt`);
+        });
+    });
+});
