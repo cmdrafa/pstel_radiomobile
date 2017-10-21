@@ -2,8 +2,8 @@ const fs = require('fs');
 const readline = require('readline');
 const stream = require('stream');
 
-const instream = fs.createReadStream('./newtest.txt');
-const resultpath = fs.openSync('./testresult.txt', 'w');
+const instream = fs.createReadStream(process.argv[2]);
+const resultpath = fs.openSync(process.argv[3]);
 resultpath.isTTY = true;
 
 const rl = readline.createInterface({

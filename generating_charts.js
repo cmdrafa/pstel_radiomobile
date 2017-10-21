@@ -5,7 +5,7 @@ const plotly = require('plotly')("cmdrafa", "0wPDTRb1m3mHTul4NSBy");
 const _ = require('lodash');
 
 
-const instream = fs.createReadStream('./result.txt')
+const instream = fs.createReadStream(process.argv[2]);
 
 const rl = readline.createInterface({
     input: instream
@@ -23,32 +23,32 @@ rl.on('line', (line) => {
     jsonData[key] = value;
 
 }).on('close', () => {
-    const total = jsonData.Entrys;
-    //console.log('Total', total)
-    const objPlot = _.omit(jsonData, ['Entrys']);
-    console.log('ObjPlot', objPlot);
-    const x = _.keys(objPlot);
-    const y = _.values(objPlot);
+        const total = jsonData.Entrys;
 
-    console.log('y', y);
+        const objPlot = _.omit(jsonData, ['Entrys']);
 
-    const data = [
-        {
-            x: x,
-            y: y/100,
-            type: "bar"
-        }
-    ];
-    const graphOptions = {
-        filename: "coverage-graph",
-        fileopt: "overwrite"
-    };
-    plotly.plot(data, graphOptions, (err, msg) => {
-        console.log(msg);
-    })
+        const x = _.keys(objPlot);
+        const y = _.values(objPlot);
+        let ytoPlot = [];
 
-    //console.log(x);
-    //console.log(y);
+        y.forEach((element) => {
+            ytoPlot.push(element / total);
+        });
 
-    //console.log(jsonData);
-});
+        console.log(ytoPlot);
+
+        const data = [
+            {
+                x: x,
+                y: ytoPlot,
+                type: "bar"
+            }
+        ];
+        const graphOptions = {
+            filename: "coverage-graph",
+            fileopt: "overwrite"
+        };
+        plotly.plot(data, graphOptions, (err, msg) => {
+            console.log(msg);
+        });
+    });
