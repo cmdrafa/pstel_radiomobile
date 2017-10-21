@@ -29,13 +29,11 @@ rl.on('line', (line) => {
 
         const x = _.keys(objPlot);
         const y = _.values(objPlot);
-        let ytoPlot = [];
 
+        let ytoPlot = [];
         y.forEach((element) => {
             ytoPlot.push(element / total);
         });
-
-        console.log(ytoPlot);
 
         const data = [
             {
@@ -45,10 +43,12 @@ rl.on('line', (line) => {
             }
         ];
         const graphOptions = {
-            filename: "coverage-graph",
+            filename: `coverage-${process.argv[2]}`,
             fileopt: "overwrite"
         };
+
         plotly.plot(data, graphOptions, (err, msg) => {
             console.log(msg);
         });
+
     });
