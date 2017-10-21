@@ -2,8 +2,8 @@ const fs = require('fs');
 const readline = require('readline');
 const stream = require('stream');
 
-const instream = fs.createReadStream('./1pixel_coverage.txt');
-const resultpath = fs.openSync('./result.txt', 'w');
+const instream = fs.createReadStream('./newtest.txt');
+const resultpath = fs.openSync('./testresult.txt', 'w');
 resultpath.isTTY = true;
 
 const rl = readline.createInterface({
@@ -25,7 +25,7 @@ let n48dB = 0;
 rl.on('line', (line) => {
     lineNumber++;
 
-    if (lineNumber > 6) {
+    if (lineNumber > 8) {
         let fields = line.split(',');
         let temprxValue_1 = fields[2];
         if (temprxValue_1) {
@@ -60,7 +60,7 @@ rl.on('line', (line) => {
         }
     }
 }).on('close', () => {
-    let result = `00db:${n0dB}\r\n08db:${n8dB}\r\n14db:${n14dB}\r\n20db:${n20dB}\r\n28db:${n28dB}\r\n34db:${n34dB}\r\n40db:${n40dB}\r\n48db:${n48dB}`;
+    let result = `Entrys:${lineNumber}\r\n00db:${n0dB}\r\n08db:${n8dB}\r\n14db:${n14dB}\r\n20db:${n20dB}\r\n28db:${n28dB}\r\n34db:${n34dB}\r\n40db:${n40dB}\r\n48db:${n48dB}`;
     fs.write(resultpath, result, () => {
         fs.close(resultpath, () => {
             console.log(`Result written to result.txt`);

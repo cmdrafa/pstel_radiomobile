@@ -1,1 +1,10 @@
 *.txt
+*.html
+*.png
+*.inf
+*.kml
+*.geo
+*.dat
+*.zip
+*.xlsx
+node_modules

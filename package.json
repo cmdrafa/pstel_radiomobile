@@ -1,0 +1,24 @@
+{
+  "name": "pstel_radiomobile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "coverage_read.js",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "plotly": "^1.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmdrafa/pstel_radiomobile.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmdrafa/pstel_radiomobile/issues"
+  },
+  "homepage": "https://github.com/cmdrafa/pstel_radiomobile#readme"
+}
