@@ -63,7 +63,7 @@ rl.on('line', (line) => {
     let result = `Entrys:${lineNumber}\r\n00db:${n0dB}\r\n08db:${n8dB}\r\n14db:${n14dB}\r\n20db:${n20dB}\r\n28db:${n28dB}\r\n34db:${n34dB}\r\n40db:${n40dB}\r\n48db:${n48dB}`;
     fs.write(resultpath, result, () => {
         fs.close(resultpath, () => {
-            console.log(`Result written to result.txt`);
+            console.log(`Result written to ${process.argv[3]}`);
         });
     });
 });
